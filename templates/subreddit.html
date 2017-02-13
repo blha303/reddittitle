@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h2>Title rules on /r/{{ subreddit }}</h2>
+<table>
+<tr>
+<th>Post ID</th>
+<th>Title</th>
+<th>Submit</th>
+</tr>
+{% if rules %}
+{% for id,pair in rules.items() %}
+<tr>
+<form method=POST action="/r/{{ subreddit }}/{{ id }}">
+<td>{{ id }}</td>
+<td><input type="text" name="title" value="{{ pair["before"].style.content }}"></td>
+<td><input type="submit"></td>
+</form>
+</tr>
+{% endfor %}
+{% endif %}
+<tr>
+<form method=POST action="/r/{{ subreddit }}">
+<td><input type="text" name="id" placeholder="id"></td>
+<td><input type="text" name="title" placeholder="title"></td>
+<td><input type="submit"></td>
+</tr>
+</table>
+{% endblock %}
