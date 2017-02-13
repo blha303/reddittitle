@@ -11,9 +11,9 @@ def index():
         return redirect("/login")
     try:
         r = praw.Reddit(user_agent="Praw user instance", site_name="reddittitle")
-        _ = list(r.user.moderator_subreddits())
-        return str(_)
-    except praw.exceptions.APIException:
+        r.auth.authorize(session["code"])
+        return ", ".join(sr.display_name for sr in r.user.moderator_subreddits())
+    except prawcore.exceptions.OAuthException:
         return redirect("/login")
 
 @app.route("/login")
